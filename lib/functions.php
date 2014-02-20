@@ -162,6 +162,53 @@ function processAlert($alertId){
 	return $return;
 }
 
+function closeAlert($aem_incident){
+	global $aem, $debug;
+	$db_tbl_alert="aem_alert";
+	if($debug) aemlog("Received close for incident ID: ".$aem_incident);
+
+	$sql ="select * from ".$db_tbl_alert." where aa_id='".$aem_incident."'";
+	$res=mysql_query($sql,$aem) or die(mysql_error());
+	switch (mysql_num_rows($res)){
+		case 0:
+			if($debug) aemlog("No alerts found with incident ID: ".$aem_incident);
+			return 1;
+			break;
+		case 1:
+			$alert=mysql_fetch_assoc($res);
+			break;
+		default:
+			if($debug) aemlog("Error: ".mysql_num_rows($res)." alerts found with incident ID: ".$aem_incident);
+			return 1;
+	}
+
+	$sql ="update aem_alert set aa_update_time=NOW() where aa_id='".$aem_incident."'";
+	mysql_query($sql,$aem) or die(mysql_error());
+
+	$sql ="update aem_alert set aa_status='closed' where aa_id='".$aem_incident."'";
+	mysql_query($sql,$aem) or die(mysql_error());
+
+	$sql ="select aat_value from aem_tokens left join aem_alert_tokens";
+	$sql.=" on aem_tokens.at_id=aem_alert_tokens.aat_token";
+	$sql.=" where at_name='source' and aat_alert='".$aem_incident."'";
+	$res=mysql_query($sql,$aem) or die(mysql_error());
+	list($source)=mysql_fetch_array($res);
+	if($debug) aemlog("Source for incident ID ".$aem_incident." is: ".$source);
+
+	/* Run Steps needed here */
+	$type="close";
+	$dPath=getDestPath($source,$type);
+	#process each step for this path
+	foreach($dPath as $step){
+		$stepRc=runStep($aem_incident,$step);
+		if(!$stepRc){
+			aemlog("Destination Step Failed!");
+		}
+	}
+	if($debug) aemlog("End of close Processing for incident ID: ".$aem_incident);
+	return 0;
+}
+
 function checkMatch($alertId){
 	global $aem, $debug;
 	$tokens = getAlertTokens($alertId,"id");

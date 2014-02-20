@@ -1,5 +1,5 @@
 <?php
-$basePath="/in/AEM";
+$basePath=".";
 require_once($basePath."/lib/aemdb.php");
 require_once($basePath."/conf/config.php");
 require_once($basePath.'/lib/functions.php');

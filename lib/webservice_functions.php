@@ -7,7 +7,7 @@ function hello($name)
 
 function closeIncident($incidentId)
  {
-  $cmd="/in/AEM/bin/aemclose.php incident_id=".$incidentId;
+  $cmd="./bin/aemclose.php incident_id=".$incidentId;
   exec($cmd,$output,$rc);
   if($rc == 0)
    {

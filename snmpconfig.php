@@ -1,6 +1,6 @@
 <?php 
-include("../lib/functions.php");
-include("../lib/aemdb.php");
+require_once("./lib/functions.php");
+require_once("./lib/aemdb.php");
 
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -29,7 +29,7 @@ actionUrl="<?php echo $_SERVER['PHP_SELF'] ?>";
     <?php // load top of page and links from function
 topOpg();
 if($_POST['action'] == "upload" || $_GET['update'] == "true"){
-	$uploaddir = '/in/AEM/snmp/mibs/';
+	$uploaddir = './snmp/mibs/';
 	if($_POST['action'] == "upload"){
 		$file = str_replace(array(".txt",".mib"),"",basename($_FILES['mibfile']['name'])).".txt";
 	}else{

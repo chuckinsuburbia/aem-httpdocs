@@ -1,5 +1,5 @@
-<?php include('../lib/aemdb.php'); ?>
-<?php include('../lib/functions.php'); ?>
+<?php require_once('lib/aemdb.php'); ?>
+<?php require_once('lib/functions.php'); ?>
 <?php if(isset($_POST['submit'])){
 	if(isset($_REQUEST['pg']) && $_REQUEST['pg'] == 'token'){
 		$sql="INSERT INTO aem_tokens (`at_id`, `at_name`) VALUES (NULL, '".$_POST['token']."')";

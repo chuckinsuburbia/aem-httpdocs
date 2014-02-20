@@ -8,8 +8,8 @@
 <?php 
 
 
-include('../lib/aemdb.php');
-include('../lib/functions.php');
+require_once('lib/aemdb.php');
+require_once('lib/functions.php');
 
 $db_tbl_primary="aem_dest_path";
 $db_tbl_stage=$db_tbl_primary."_stage";

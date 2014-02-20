@@ -1,7 +1,7 @@
 <?php
 // Pull in the NuSOAP code
-require_once('/in/AEM/lib/nusoap/lib/nusoap.php');
-require_once('/in/AEM/lib/webservice_functions.php');
+require_once('../lib/nusoap/lib/nusoap.php');
+require_once('../lib/webservice_functions.php');
 
 // Create the server instance
 $server = new soap_server();

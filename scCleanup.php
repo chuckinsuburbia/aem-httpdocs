@@ -4,7 +4,7 @@ ini_set('max_execution_time', 0);
 
 if(isset($argv[1])) { $_REQUEST['action'] = $argv[1]; }
 
-$basePath="/in/AEM";
+$basePath=".";
 require_once($basePath."/lib/aemdb.php");
 require_once($basePath."/conf/config.php");
 require_once($basePath.'/lib/functions.php');

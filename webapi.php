@@ -1,11 +1,7 @@
 <?php
-$basePath="/in/AEM";
-include($basePath."/lib/aemdb.php");
-include($basePath."/conf/config.php");
-/*
-include("../lib/aemdb.php");
-include("../conf/config.php");
-*/
+$basePath=".";
+require_once($basePath."/lib/aemdb.php");
+require_once($basePath."/conf/config.php");
 
 print_r($_REQUEST);
 

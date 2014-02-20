@@ -7,7 +7,7 @@ if(isset($_GET['action']) && $_GET['action']=="about")
  {
   echo("<!DOCTYPE HTML PUBLIC '-//W3C//DTD HTML 4.01//EN' 'http://www.w3.org/TR/html4/strict.dtd'>");
   echo("<html><head><title>About - ".$_GET['alertId']."</title>");
-  echo("<LINK href='css/default.css' rel='stylesheet' type='text/css'></head>");
+  echo("<link href='css/default.css' rel='stylesheet' type='text/css'></head>");
   echo("<body>");
   $alertTokens=getAlertTokens($_GET['alertId'],"name");
   echo("<table><tr><th colspan=2>Details</th></tr>");
@@ -35,22 +35,18 @@ $debug=false;
 //$refresh='<meta http-equiv="refresh" content="30"/>';
 $refresh = "";
 
-if(isset($_GET['action']) && $_GET['action']=="close" && $adminUser)
- {
-  exec($aemclose." incident_id=".$_GET['alertId'],$stdout,$rc);
-  if ($rc == 0)
-   {
-    $refresh.="<script language='Javascript'> alert ('Alert ".$_GET['alertId']." closed.') </script>";
-   }
-  else
-   {
-    $refresh.="<script language='Javascript'> alert ('Failed to close Alert ".$_GET['alertId'].".') </script>";
-   }
-  $refresh.="<script language='Javascript'> window.location='".$_SERVER['PHP_SELF']."'</script>";
-
+if(isset($_GET['action']) && $_GET['action']=="close" && $adminUser){
+	$rc = closeAlert($_GET['alertId']);
+	//exec($aemclose." incident_id=".$_GET['alertId'],$stdout,$rc);
+	if ($rc == 0){
+		$refresh.="<script language='Javascript'> alert ('Alert ".$_GET['alertId']." closed.') </script>";
+	}else{
+		$refresh.="<script language='Javascript'> alert ('Failed to close Alert ".$_GET['alertId'].".') </script>";
+	}
+	$refresh.="<script language='Javascript'> window.location='".$_SERVER['PHP_SELF']."'</script>";
 } 
 
-$qs = explode('&',$_SERVER['QUERY_STRING']);
+$qs = isset($_SERVER['QUERY_STRING']) ? explode('&',$_SERVER['QUERY_STRING']) : array();
 foreach($qs as $var){
 	if(substr($var,0,6) != "action" && substr($var,0,7) != "alertId")
 		$queryString = $var;
@@ -65,11 +61,10 @@ if(!empty($queryString)) $queryString = "?".$queryString;
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <?php echo $refresh ?>
 <title>AEM AAD</title>
-
+<link href='css/default.css' rel='stylesheet' type='text/css'>
 <script type="text/javascript" language="JavaScript1.2" src="./menu/stmenu.js"></script>
 <script language="javascript">
-alert("<?php echo $adminUser ? "true" : "false"; ?>");
-<!--
+//alert("<?php echo $adminUser ? "true" : "false"; ?>");
 actionUrl="<?php echo $_SERVER['PHP_SELF'] ?>";
 function popComments(alertId){
     day = new Date();
