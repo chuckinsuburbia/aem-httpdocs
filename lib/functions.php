@@ -485,7 +485,7 @@ function topOpg(){
   <tr>
     <td>
     <table width="100%" border="0" cellspacing="0" cellpadding="0"><tr>
-    <td height="100" align="center" nowrap="nowrap" width="100%"><p><a href="index.php" style="text-decoration:none"><img src="images/anp.gif" border="0" width="210" height="108" /></a><img src="images/eventMgr.gif" width="400" height="108" /><img src="images/crosshairs.gif" width="88" height="88" />AEM</p></td>
+    <td height="100" style="text-align:center" align="center" nowrap="nowrap" width="100%"><a href="/" style="text-decoration:none"><img src="images/aem_banner.png" border="0" /></a></td>
     </tr>
   <tr>
     <td align="center">';
