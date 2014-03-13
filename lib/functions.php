@@ -39,9 +39,8 @@ if(!isset($local)){
 		$aemuser=mysql_fetch_assoc($res);
 		if ($aemuser['au_admin'] == 'true') {
 			$_SESSION['adminUser'] = true;
-			alert("SUCCESS");	
 		} else {
-			alert($_REQUEST['username']." is not an AEM admin user.");
+			echo("alert('".$_REQUEST['username']." is not an AEM admin user.')");
 		}
 		//print_r($result);
 	}
@@ -276,7 +275,7 @@ function runStep($alertId,$step){
 		$tokenValues = "";
 		//print_r($tokens);
 		foreach($stepConfig as $token){
-			$tokenValues .= '"'.$tokens[$token].'" ';
+			$tokenValues .= isset($tokens[$token]) ? '"'.$tokens[$token].'" ' : '"" ';
 		}
 		$cmd = $stepInfo['as_action']." ".$alertId." ".$tokenValues;
 		if($debug) aemlog($cmd);
@@ -309,7 +308,7 @@ function translate($alertId,$step,$config){
 	$tokens = getAlertTokens($alertId, 'id');
 	$tokenValues = "";
 	foreach($config as $token){
-		$tokenValues .= addslashes($tokens[$token]).'|';
+		$tokenValues .= isset($tokens[$token]) ? addslashes($tokens[$token]).'|' : '|';
 	}
 	$tokenValues = substr($tokenValues,0,strlen($tokenValues)-1);
 	$sql = "select atran_value from aem_translation where atran_step = ".$step." and '".$tokenValues."' rlike atran_match order by atran_sequence limit 1";
@@ -320,6 +319,7 @@ function translate($alertId,$step,$config){
 	$tokenNames = getAlertTokens($alertId,'names');
 	//$tokenNames['domain']='m074lp01';
 	foreach($allTokens as $token){
+		if(!isset($tokenNames[$token])) continue;
 		$search[] = '%%'.$token.'%%';
 		$replace[] = $tokenNames[$token];
 	}
@@ -468,7 +468,7 @@ function topOpg(){
 	global $adminUser;
 
 	print '<div id="login" style="visibility:hidden; width: 200px; height:150px; background-color: #FFFFFF; border: medium double #666666; display: none;" align="center">
-  <form method="post" name="form1" id="form1" onSubmit="login();return false;">
+  <form method="post" name="form1" id="form1" action="'.$_SERVER['PHP_SELF'].'">
     <p align="center">Username
       <input type="text" name="username" id="username" />
     </p>
@@ -477,7 +477,7 @@ function topOpg(){
     </p>
     <p align="center">
 	  <input type="hidden" name="return" value="'.$_SERVER['REQUEST_URI'].'">
-      <input type="submit" name="loginButton" id="loginButton" value="Login" onClick="login();return false;" />
+      <input type="submit" name="loginButton" id="loginButton" value="Login" />
     </p>
   </form>
 </div>
@@ -517,4 +517,24 @@ function bottomOpg(){
   </tr>
 </table>';
 }
+
+/* Web Service functions */
+
+function hello($name){
+	return 'Hello, ' . $name;
+}
+
+function closeIncident($incidentId){
+	$rc = closeAlert($incidentId);
+/*
+	$cmd="./bin/aemclose.php incident_id=".$incidentId;
+	exec($cmd,$output,$rc);
+*/
+	if($rc == 0){
+		return("SUCCESS");
+	}else{
+		return("FAILED");
+	}
+}
+
 ?>

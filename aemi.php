@@ -80,11 +80,11 @@ function enableScript(){
 				</form>';
 			}
 			if($_REQUEST['pg'] == 'steps'){
-				if($_POST['TOKstepID']){
+				if(isset($_POST['TOKstepID']) && $_POST['TOKstepID']){
 					$sql="UPDATE aem_step SET as_return_token = '".$_POST['return_token']."' WHERE as_id =".$_POST['TOKstepID']."";
 					$qry=mysql_query($sql, $aem);	
 				}
-				if($_POST['renaming']){
+				if(isset($_POST['renaming']) && $_POST['renaming']){
 					if($_POST['step_type'] == 'script'){
 						$renameAction=$_POST['script'];
 					}else{
@@ -94,7 +94,7 @@ function enableScript(){
 					print $sql.'<br>';
 					$qry=mysql_query($sql, $aem);
 				}
-				if($_GET['copying']){
+				if(isset($_GET['copying']) && $_GET['copying']){
 					$sql="INSERT INTO aem_step (`as_name` ,`as_action` ,`as_return_token` ) select concat(`as_name`, '_copy') ,`as_action` ,`as_return_token` from aem_step where as_id=".$_GET['copying']."";	
 					$qry=mysql_query($sql, $aem);
 					$insertID=mysql_insert_id();
@@ -117,7 +117,7 @@ function enableScript(){
 				}// end of if addStep
 				
 				// DELETE THE STEP ///////////////
-				if($_GET['delete']){
+				if(isset($_GET['delete']) && $_GET['delete']){
 					$sql="delete from aem_step where as_id='".$_GET['delete']."'";
 					$qry=mysql_query($sql, $aem);
 					$sql="delete from aem_step_config where asc_step='".$_GET['delete']."'";
@@ -132,11 +132,11 @@ function enableScript(){
 	  			print "<p>&nbsp;</p>";
 				print '<table width="50%">';
 				// changing the end token : text, service, contact, etc. 
-				if(!$_GET['chg_token']){
+				if(!isset($_GET['chg_token'])){
 				  // rename the step	
 				  $defStyle='style="display:none"';
 				  $defSub='addStep';
-				  if($_GET['rename']){
+				  if(isset($_GET['rename']) && $_GET['rename']){
 					 $sqlren="select * from aem_step where as_id=".$_GET['rename'];
 					 $qryren=mysql_query($sqlren, $aem);
 					 $asName=mysql_result($qryren,0,'as_name');
@@ -159,29 +159,31 @@ function enableScript(){
 					 $defStyle='';
 					 $defSub='renaming';
 				  }// end of GET rename
-				print '<tr><td align="center" colspan="4">
-						<form id="form1" name="form1" method="post" action="'.$_SERVER['PHP_SELF'].'?pg=steps">
+?>
+					<tr><td align="center" colspan="4">
+						<form id="form1" name="form1" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>?pg=steps">
 							<table width="100%" border="0" cellspacing="0" cellpadding="0">
 							  <tr>
-								<td><input type="text" name="step_name" value="'.$asname.'" size="15"/></td>
+								<td><input type="text" name="step_name" value="<?php if(isset($asname)) echo $asname; ?>" size="15"/></td>
 								<td><select name="step_type" id="step_type" onChange="enableScript();">
 										<option value="">Select Type</option>
-										<option value="function blackout" '.$selectB.'>Blackout</option>
-										<option value="function translate" '.$selectT.'>Translate</option>
-										<option value="script" '.$selectS.'>Script</option>
+										<option value="function blackout" <?php if(isset($selectB)) echo $selectB; ?>>Blackout</option>
+										<option value="function translate" <?php if(isset($selectT)) echo $selectT; ?>>Translate</option>
+										<option value="script" <?php if(isset($selectS)) echo $selectS; ?>>Script</option>
 									</select></td>
-								<td><input type="text" name="script" id="script" value="'.$message.'" size="30" '.$defStyle.' /></td>
+								<td><input type="text" name="script" id="script" value="<?php echo $message; ?>" size="30" <?php echo $defStyle; ?> /></td>
 								<td align="center">
 								<select name="return_token">
 									<option value="">Return Token</option>';
+<?php
 									while($row=mysql_fetch_assoc($qry)){
 										print '<option value="'.$row['at_id'].'"';
-										if($art == $row['at_id']){ print ' selected="selected" '; }
+										if(isset($art) && $art == $row['at_id']){ print ' selected="selected" '; }
 										print '>'.$row['at_name'].'</option>';
 									}
 								print '</select></td>
 								<td align="right">&nbsp;';
-								if($_GET['rename']){ print '<input type="hidden" name="renameID" value="'.$_GET['rename'].'" />'; }
+								if(isset($_GET['rename']) && $_GET['rename']){ print '<input type="hidden" name="renameID" value="'.$_GET['rename'].'" />'; }
 								print '<input type="submit" name="'.$defSub.'" value="Step" /></td>
 							  </tr><tr><td colspan="5"><hr><td><tr>
 							</table>
@@ -233,14 +235,14 @@ function enableScript(){
 			// DISPLAY SOURCE PAGE ////////////////////////////
 			if($_REQUEST['pg'] == 'source'){
 				
-				if($_GET['delete']){
+				if(isset($_GET['delete']) && $_GET['delete']){
 					$sql="delete from aem_source where asrc_id=".$_GET['delete'];
 					$qry=mysql_query($sql, $aem);
 					$sql="delete from aem_source_path where asp_source=".$_GET['delete'];
 					$qry=mysql_query($sql, $aem);
 				} // end of DELETE 
 				
-				if($_GET['copying']){
+				if(isset($_GET['copying']) && $_GET['copying']){
 					$sql="INSERT INTO aem_source (`asrc_name`) select concat(`asrc_name`, '_copy') from aem_source where asrc_id=".$_GET['copying']."";	
 					$qry=mysql_query($sql, $aem);
 					$insertID=mysql_insert_id();
@@ -248,7 +250,7 @@ function enableScript(){
 					$qry=mysql_query($sql, $aem);
 				}// END OF COPY
 				
-			  if(!$_GET['rename']){
+			  if(!isset($_GET['rename'])){
 				if(isset($_POST['RENAMING'])){
 					$sql="UPDATE `aem`.`aem_source` SET `asrc_name` = '".$_POST['renaming']."' WHERE `aem_source`.`asrc_id` =".$_POST['namingID']."";
 					$qry=mysql_query($sql, $aem);
@@ -282,7 +284,7 @@ function enableScript(){
 					$sdqry=mysql_query($sdsql, $aem);
 					$deststeps=array();
 					while($adrow=mysql_fetch_assoc($sdqry)){
-						$deststeps[$adrow['adp_type']].=' '.$adrow['as_name'].' > ';
+						$deststeps[$adrow['adp_type']] .= isset($adrow['as_name']) ? ' '.$adrow['as_name'].' > ' : '';
 					}
 
 					print '<tr><td colspan="3" style="border-top: 1px solid black;padding-top:5px;"><span style="display:inline; float:left;">'.$seq_name.'</span><span style="display:inline; float:right;"><a href="aemi.php?pg=source&rename='.$row['asrc_id'].'&name='.$seq_name.'" onclick="return confirm(\'Renaming '.$seq_name.'\');" ><img src="images/rename.gif" width="16" height="16" title="Rename Source" border="0" /></a>&nbsp;<a href="aemi.php?pg=source&copying='.$row['asrc_id'].'" onclick="return confirm(\'Copying '.$seq_name.'\');" ><img src="images/copy2.gif" width="16" height="16" title="Copy Source" border="0" /></a> &nbsp;<a href="aemi.php?pg=source&delete='.$row['asrc_id'].'" onclick="return confirm(\'Deleting '.$seq_name.'\');" ><img src="images/delete.png" width="16" height="16" border="0" title="Delete Source" /></a></span></td></tr>

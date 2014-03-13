@@ -18,6 +18,7 @@ if(isset($_GET['action']) && $_GET['action']=="about")
   unset($alertTokens['aem_severity']);
   echo("<tr><td class='emph'>Text</td><td>".$alertTokens['text']."</td></tr>");
   unset($alertTokens['text']);
+  if(!isset($alertTokens['comment'])) $alertTokens['comment'] = '';
   echo("<tr><td class='emph'>Comments</td><td><pre>".$alertTokens['comment']."</pre></td></tr>");
   unset($alertTokens['comment']);
   echo("<tr><th colspan=2>Other Tokens</th></tr>");
