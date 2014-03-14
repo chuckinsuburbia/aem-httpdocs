@@ -277,7 +277,13 @@ function runStep($alertId,$step){
 		foreach($stepConfig as $token){
 			$tokenValues .= isset($tokens[$token]) ? '"'.$tokens[$token].'" ' : '"" ';
 		}
-		$cmd = $stepInfo['as_action']." ".$alertId." ".$tokenValues;
+                if(strstr($stepInfo['as_action'],'{$')) {
+                        $var = substr($stepInfo['as_action'],strpos($stepInfo['as_action'],'{')+1,(strpos($stepInfo['as_action'],'}')-strpos($stepInfo['as_action'],'{'))-1);
+                        eval("global ".$var."; \$cmd = \"".$stepInfo['as_action']."\";");
+                        $cmd .= " ".$alertId." ".$tokenValues;
+                } else {
+                        $cmd = $stepInfo['as_action']." ".$alertId." ".$tokenValues;
+                }
 		if($debug) aemlog($cmd);
 		$returnToken = exec($cmd,$sysout,$rc);
 	}

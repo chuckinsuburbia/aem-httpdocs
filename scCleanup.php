@@ -4,12 +4,11 @@ ini_set('max_execution_time', 0);
 
 if(isset($argv[1])) { $_REQUEST['action'] = $argv[1]; }
 
-$basePath=".";
+$basePath=$_SERVER['DOCUMENT_ROOT'];
 require_once($basePath."/lib/aemdb.php");
+require_once($basePath.'/lib/nusoap/lib/nusoap.php');
 require_once($basePath."/conf/config.php");
 require_once($basePath.'/lib/functions.php');
-require_once($basePath.'/lib/nusoap/lib/nusoap.php');
-require_once($basePath.'/sc/conf/sc_connection.php');
 $debug = false;
 
 function closeSC($diff,$aem)
@@ -49,28 +48,26 @@ function openSC($diff,$aem)
 
 $query = '(Category="PEM"|Category="BMC")&IMTicketStatus~="Closed"&PrimaryAssignmentGroup~="PEMEMAILTEST"';
 
-//$client = new nusoap_client('http://monsvcctrdr1:12671/IncidentManagement?wsdl', 'wsdl','','','','');
-//$client = new nusoap_client('http://scclientprod:12671/IncidentManagement?wsdl', 'wsdl','','','','');
-$err = $client->getError();
+$err = $sc_client->getError();
 if ($err) { die( '<h2>Constructor error</h2><pre>' . $err . '</pre>'); }
 
-$client->setCredentials('pem', 'Pemspassword');
+$sc_client->setCredentials('pem', 'Pemspassword');
 // Doc/lit parameters get wrapped
 $keys = new soapval('keys','IncidentKeysType',"","http://servicecenter.peregrine.com/PWS",false,array("query" => $query));
 $instance = new soapval("instance","IncidentInstanceType","","http://servicecenter.peregrine.com/PWS");
 $model = new soapval("model", "IncidentModelType",array($keys,$instance),null,"http://servicecenter.peregrine.com/PWS");	
 	$RetrieveIncidentListRequest = new soapval("RetrieveIncidentListRequest","RetrieveIncidentListRequestType",$model,"http://servicecenter.peregrine.com/PWS");
-	$result = $client->call('RetrieveIncidentList',$RetrieveIncidentListRequest->serialize('literal'),"http://servicecenter.peregrine.com/PWS");
+	$result = $sc_client->call('RetrieveIncidentList',$RetrieveIncidentListRequest->serialize('literal'),"http://servicecenter.peregrine.com/PWS");
 // Check for a fault
 
-if ($client->fault) 
+if ($sc_client->fault) 
  {
   echo '<h2>Retrieve Fault</h2><pre>';
   print_r($result);
   echo '</pre>';
   die("</body></html");
  } 
-$err = $client->getError();
+$err = $sc_client->getError();
 if ($err) 
  {
   // Display the error
