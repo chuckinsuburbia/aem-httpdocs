@@ -3,11 +3,11 @@
 date_default_timezone_set('America/New_York');
 
 // Pull in the NuSOAP code
-require_once('../conf/config.php');
-require_once('../lib/nusoap/lib/nusoap.php');
-require_once('../lib/aemdb.php');
-require_once('../lib/CronParser.php');
-require_once('../lib/functions.php');
+$basePath = $_SERVER['DOCUMENT_ROOT'];
+require_once($basePath.'/conf/config.php');
+require_once($basePath.'/lib/nusoap/lib/nusoap.php');
+require_once($basePath.'/lib/CronParser.php');
+require_once($basePath.'/lib/functions.php');
 
 // Create the server instance
 $server = new soap_server();

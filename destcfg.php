@@ -7,9 +7,9 @@
 
 <?php 
 
-
-require_once('lib/aemdb.php');
-require_once('lib/functions.php');
+$basePath = $_SERVER['DOCUMENT_ROOT'];
+require_once($basePath.'/conf/config.php');
+require_once($basePath.'/lib/functions.php');
 
 $db_tbl_primary="aem_dest_path";
 $db_tbl_stage=$db_tbl_primary."_stage";

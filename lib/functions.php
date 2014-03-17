@@ -33,7 +33,6 @@ if(!isset($local)){
 		if (($result = ldap_authenticate($_REQUEST['username'],$_REQUEST['password'])) == NULL) {
 			die('Authorization Failed');
 		} 
-		require_once('aemdb.php');
                 $sql="select * from aem_user where au_name='".$_REQUEST['username']."'";
                 $res=mysql_query($sql,$aem) or die(mysql_error());
 		$aemuser=mysql_fetch_assoc($res);

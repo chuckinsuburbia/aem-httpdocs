@@ -1,6 +1,5 @@
 <?php 
 $basePath=$_SERVER['DOCUMENT_ROOT'];
-require_once($basePath."/lib/aemdb.php");
 require_once($basePath."/conf/config.php");
 require_once($basePath.'/lib/functions.php'); 
 if(isset($_GET['action']) && $_GET['action']=="about")

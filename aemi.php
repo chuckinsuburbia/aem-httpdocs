@@ -1,6 +1,9 @@
-<?php require_once('lib/aemdb.php'); ?>
-<?php require_once('lib/functions.php'); ?>
-<?php if(isset($_POST['submit'])){
+<?php 
+$basePath = $_SERVER['DOCUMENT_ROOT'];
+require_once($basePath.'/conf/config.php');
+require_once($basePath.'/lib/functions.php');
+
+if(isset($_POST['submit'])){
 	if(isset($_REQUEST['pg']) && $_REQUEST['pg'] == 'token'){
 		$sql="INSERT INTO aem_tokens (`at_id`, `at_name`) VALUES (NULL, '".$_POST['token']."')";
 		$qry=mysql_query($sql, $aem);
