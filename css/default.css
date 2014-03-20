@@ -35,7 +35,6 @@ table {
   align:           left;
 }
 table,th,td {
-  border:      1px solid black;
   font-family: Verdana, Arial, Helvetica, sans-serif;
   font-size:   8pt;
   text-align:  left;
@@ -148,7 +147,6 @@ th {
   align:           left;
 }
 #content table, #content th,#content td {
-  border:      1px solid black;
   font-family: Verdana, Arial, Helvetica, sans-serif;
   font-size:   8pt;
   text-align:  left;
