@@ -40,7 +40,7 @@ if($returnAlert != false){
         $alertId = $returnAlert['alertId'];
 
         $dPath=getDestPath($tokens['source'],$destType);
-        print_r($dPath);
+        //print_r($dPath);
         if($debug) aemlog("running outbound steps");
         #process each step for this path
         foreach($dPath as $step){
