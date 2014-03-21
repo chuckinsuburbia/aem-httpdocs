@@ -465,6 +465,7 @@ function htmlHead(){
 <script type="text/javascript" src="./include/lightbox/js/lightbox.js"></script>
 <link rel="stylesheet" href="./include/lightbox/css/lightbox.css" type="text/css" media="screen" />';	*/
 	print '<script type="text/javascript" src="./include/jquery-1.6.2.min.js"></script>
+	<script type="text/javascript" src="./lib/tablesorter/jquery.tablesorter.js"></script>
 	<script type="text/javascript" src="./include/thickbox/thickbox.js"></script>
 <script type="text/javascript" src="./include/aem.js"></script>
 	<link rel="stylesheet" href="./include/thickbox/thickbox.css" type="text/css" media="screen" />';
