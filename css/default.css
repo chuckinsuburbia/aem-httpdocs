@@ -75,12 +75,12 @@ th {
 */
 
 .sevCritical, .sevMajor {
-        background-color: #FF0000;
-        border-color:#FF0000;
+        background-color: #FF7777;
+        border-color:#FF7777;
 }
 .sevWarning, .sevMinor {
-        background-color: #FFFF00;
-        border-color: #FFFF00;
+        background-color: #FFFF77;
+        border-color: #FFFF77;
 }
 .selected {
         color: #000000;
