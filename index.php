@@ -60,8 +60,21 @@ if(!empty($queryString)) $queryString = "?".$queryString;
 <link rel="stylesheet" href="/css/tablesorter/blue/style.css" type="text/css" media="print, projection, screen" />
 <script type="text/javascript" language="JavaScript1.2" src="./menu/stmenu.js"></script>
 <script type="text/javascript" language="JavaScript1.2" src="./menu/pem.js"></script>
+<script type="text/javascript" language="JavaScript1.2" src="./lib/jquery-2.1.0.min.js"></script>
 
 <script language="javascript">
+	function checkReloading() {
+		var reload = document.getElementById('reloadCB');
+		if (reload.checked) {
+			timer = setTimeout(function() {
+				document.getElementById('mainForm').submit();
+			}, 60000);
+		} else {
+			if (typeof timer != 'undefined') { clearTimeout(timer); }
+		}
+	}
+	$(function() { checkReloading(); });
+
 	//alert("<?php echo $adminUser ? "true" : "false"; ?>");
 	actionUrl="<?php echo $_SERVER['PHP_SELF'] ?>";
 	function popComments(alertId){
@@ -307,7 +320,16 @@ $(document).ready(function()
 
 <br />
 
-<div style="font-size:10px;text-align:left">(updated <?php echo date("m/d/Y H:i:s") ?>)<a href="javascript:location.reload();"><img src="images/refresh.png" width="16" height="16" border="0"/></a></div>
+<div style="font-size:10px;text-align:left">
+	(updated <?php echo date("m/d/Y H:i:s") ?>)
+	<a href="javascript:location.reload();"><img src="images/refresh.png" width="16" height="16" border="0"/></a>
+	<form id='mainForm' action='<?php echo($_SERVER['PHP_SELF']); ?>' method='post'>
+		<label>
+			<input type='checkbox' onclick='checkReloading();' id='reloadCB' name='reloadCB'" <?php if(isset($_REQUEST['reloadCB'])) { $_SESSION['reloadCB'] = $_REQUEST['reloadCB']; } if($_SESSION['reloadCB'] == 'on') { echo(" checked"); } ?> />
+			Auto Refresh
+		</label>
+	</form>
+</div>
 <table id="myTable" class="tablesorter">
   <thead>
   <tr>
