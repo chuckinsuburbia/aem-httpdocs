@@ -1,6 +1,12 @@
 #!/usr/bin/php
 <?php
 
+//$basePath=$_SERVER['DOCUMENT_ROOT'];
+$basePath="/var/www/html";
+require_once($basePath.'/lib/nusoap/lib/nusoap.php');
+require_once($basePath."/conf/config.php");
+require_once($basePath.'/lib/functions.php');
+
 function sclog($logfile,$string) {
  $handle = fopen($logfile, 'a');
  $d=date('r');
@@ -8,8 +14,7 @@ function sclog($logfile,$string) {
  fclose($handle);
 }
 
-date_default_timezone_set('America/New_York');
-$logfile = dirname($_SERVER['PHP_SELF'])."/../logs/anpCloseEntry.log";
+$logfile = $basePath."/logs/anpCloseEntry.log";
 sclog($logfile,implode(" ",$argv));
 
 $MAP[1] = "aemid";            //AEM Incident ID
@@ -29,13 +34,9 @@ foreach ($MAP as $k => $v)
 
 #print_r($arguments);
 
-require_once(dirname($_SERVER['PHP_SELF']).'/../lib/nusoap/lib/nusoap.php');
-require_once(dirname($_SERVER['PHP_SELF']).'/conf/sc_connection.php');
 
-#$client = new nusoap_client('http://'.$arguments['scserver'].':12671/IncidentManagement?wsdl', 'wsdl','','','','');
-#$client = new nusoap_client('http://monsvcctrdr1:12671/IncidentManagement?wsdl', 'wsdl','','','','');
 
-$err = $client->getError();
+$err = $sc_client->getError();
 if ($err) {
 	die( '<h2>Constructor error</h2><pre>' . $err . '</pre>');
 }
@@ -55,16 +56,16 @@ $instance = new soapval("instance","IncidentInstanceType",array($Resolution,$Res
 $model = new soapval("model", "IncidentModelType",array($keys,$instance),null,"http://servicecenter.peregrine.com/PWS");	
 $UpdateIncidentRequest = new soapval("UpdateIncidentRequest","UpdateIncidentRequestType",$model,"http://servicecenter.peregrine.com/PWS");
 $CloseIncidentRequest = new soapval("CloseIncidentRequest","CloseIncidentRequestType",$model,"http://servicecenter.peregrine.com/PWS");
-$client->setCredentials('pem', 'Pemspassword');
-$result = $client->call('CloseIncident',$CloseIncidentRequest->serialize('literal'),"http://servicecenter.peregrine.com/PWS");//, 
+$sc_client->setCredentials('pem', 'Pemspassword');
+$result = $sc_client->call('CloseIncident',$CloseIncidentRequest->serialize('literal'),"http://servicecenter.peregrine.com/PWS");//, 
 // Check for a fault
-if ($client->fault) {
+if ($sc_client->fault) {
 	echo '<h2>Update Fault</h2><pre>';
 	print_r($result);
 	echo '</pre>';
 } else {
 	// Check for errors
-	$err = $client->getError();
+	$err = $sc_client->getError();
 	if ($err) {
 		// Display the error
 		echo '<h2>Create Error</h2><pre>' . $err . '</pre>';

@@ -503,7 +503,8 @@ function topOpg(){
       <a href="aemi.php?pg=steps" class="linktxt">Steps</a>&nbsp;&nbsp;
       <a href="aemi.php?pg=source" class="linktxt">Source</a> &nbsp;&nbsp;
       <a href="snmpconfig.php" class="linktxt">SNMP</a> &nbsp;&nbsp;
-      <a href="javascript:logout();" class="linktxt">Log out</a></div>';
+      <a href="javascript:logout();" class="linktxt">Log out</a> &nbsp;&nbsp;
+      <a href="scCleanup.php" class="linktext">SC Cleanup</a></div>';
 	print '<div id="guest" align="center" style="';
 	print !$adminUser ? "visibility: visible; display: block" : "visibility:hidden;display:none";
 	print '"><a href="#TB_inline?height=155&width=300&inlineId=login&modal=true" class="thickbox" onClick="document.getElementById(\'username\').focus();">Log in</a></div>';

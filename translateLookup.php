@@ -65,9 +65,14 @@ $htmlTokenValues = "<tr><th>Alert Values</th>";
 foreach ($stepTokens['value'] as $value) { $htmlTokenValues .= "<td>".$value."</td>"; }
 $htmlTokenValues .= "</tr>";
 
-$htmlMatchValues = "<tr><th>Matching Values</th>";
-foreach ($translationConfigs[0]['match'] as $match) { $htmlMatchValues .= "<td>".$match."</td>"; }
-$htmlMatchValues .= "</tr>";
+//$htmlMatchValues = "<tr><th>Matching Values</th>";
+//foreach ($translationConfigs[0]['match'] as $match) { $htmlMatchValues .= "<td>".$match."</td>"; }
+//$htmlMatchValues .= "</tr>";
+foreach ($translationConfigs as $k => $config) {
+	$htmlMatchValues .= $k == 0 ? "<tr><th>Matching Values</th>" : "<tr><td></td>";
+	foreach ($config['match'] as $match) { $htmlMatchValues .= "<td>".$match."</td>"; }
+	$htmlMatchValues .= "<td>".$config['atran_value']."</tr></tr>";
+}
 
 $htmlReturnToken = "<tr><th>Return Token</th><td>".$returnToken['name']."</td></tr>";
 $htmlTransValue  = "<tr><th>Translation</th><td>".$translationConfigs[0]['atran_value']."</td></tr>";

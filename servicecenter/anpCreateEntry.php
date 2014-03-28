@@ -1,8 +1,10 @@
 #!/usr/bin/php
 <?php
 
-//Set time zone so date() doesn't throw errors.
-date_default_timezone_set('America/New_York');
+$basePath="/var/www/html";
+require_once($basePath.'/lib/nusoap/lib/nusoap.php');
+require_once($basePath."/conf/config.php");
+require_once($basePath.'/lib/functions.php');
 
 function sclog($logfile,$string) {
  $handle = fopen($logfile, 'a');
@@ -13,7 +15,7 @@ function sclog($logfile,$string) {
 
 $pwd = dirname($_SERVER['PHP_SELF']);
 
-$logfile = $pwd."/../logs/anpCreateEntry.log";
+$logfile = $basePath."/logs/anpCreateEntry.log";
 sclog($logfile,implode(" ",$argv));
 
 $MAP[1] = "alertId";           //AEM Incident ID
@@ -53,13 +55,7 @@ switch ($arguments['type'])
 
 #print_r($arguments);
 
-require_once($pwd.'/../lib/nusoap/lib/nusoap.php');
-require_once($pwd.'/conf/sc_connection.php');
-
-#$client = new nusoap_client('http://'.$arguments['scserver'].':12671/IncidentManagement?wsdl', 'wsdl','','','','');
-#$client = new nusoap_client('http://monsvcctrdr1:12671/IncidentManagement?wsdl', 'wsdl','','','','');
-
-$err = $client->getError();
+$err = $sc_client->getError();
 if ($err) {
 	die( '<h2>Constructor error</h2><pre>' . $err . '</pre>');
 }
@@ -96,20 +92,20 @@ $FailingComponent,
 $ReferenceNo),"http://servicecenter.peregrine.com/PWS/Common");
 $model = new soapval("model", "IncidentModelType",array($keys,$instance),null,"http://servicecenter.peregrine.com/PWS");	
 $CreateIncidentRequest = new soapval("CreateIncidentRequest","CreateIncidentRequestType",$model,"http://servicecenter.peregrine.com/PWS");
-//$client->loadWSDL();
-$client->setCredentials('pem', 'Pemspassword');
-$result = $client->call('CreateIncident',$CreateIncidentRequest->serialize('literal'),"http://servicecenter.peregrine.com/PWS");//, '', 'Create', false, true,'rpc');
+//$sc_client->loadWSDL();
+$sc_client->setCredentials('pem', 'Pemspassword');
+$result = $sc_client->call('CreateIncident',$CreateIncidentRequest->serialize('literal'),"http://servicecenter.peregrine.com/PWS");//, '', 'Create', false, true,'rpc');
 // Check for a fault
-if ($client->fault) {
+if ($sc_client->fault) {
 	sclog('Create FAILED - Client Fault:');
 	sclog(print_r($result,TRUE));
 } else {
 	// Check for errors
-	$err = $client->getError();
+	$err = $sc_client->getError();
 	if ($err) {
 		// Display the error
 		sclog($logfile,"Create FAILED - Client Error: $err");
-#		print_r($client);
+#		print_r($sc_client);
 		sclog($logfile,print_r($result,TRUE));
 	} else {
 		if($result['!status'] != "SUCCESS" ){

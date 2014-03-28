@@ -10,10 +10,17 @@ require_once($basePath."/conf/config.php");
 require_once($basePath.'/lib/functions.php');
 $debug = false;
 
-function closeSC($diff,$aem)
- {
-  $debug = false;
-  $status = "";
+$response_timeout=0;
+
+function closeSC($diff,$aem) {
+	$debug = false;
+	$status = "";
+	foreach($diff as $im => $incident) {
+		$status.="Triggering SC to close ticket ".$im."...";
+		exec("/var/www/html/servicecenter/anpCloseEntry.php ".$incident." ".$im,$output,$rc);
+		$status.=print_r($output,TRUE)."<br />";
+	}
+/*
   $sql = "select as_id from aem_step where as_name='SC Close'";
   $result = mysql_query($sql,$aem) or die(mysql_error());
   $step = mysql_fetch_assoc($result);
@@ -23,6 +30,7 @@ function closeSC($diff,$aem)
     $rc = runStep($incident,$step['as_id']);
     $status .= ($rc == true) ? "Success.<br />" : "Failed.<br />";
    }
+*/
   $status .= "<form action='".$_SERVER['PHP_SELF']."'><input type=submit value='Refresh'></form></body></html>";
   return($status);
  }
@@ -46,6 +54,8 @@ function openSC($diff,$aem)
 
 
 $query = '(Category="PEM"|Category="BMC")&IMTicketStatus~="Closed"&PrimaryAssignmentGroup~="PEMEMAILTEST"';
+//$query = '(Category="PEM"|Category="BMC")&IMTicketStatus~="Closed"&PrimaryAssignmentGroup="PATROL SERVICE SUPPORT"&Priority="1"';
+//$query = '(Category="PEM"|Category="BMC")&IMTicketStatus~="Closed"&PrimaryAssignmentGroup="ENTERPRISE SCHEDULING"';
 
 $err = $sc_client->getError();
 if ($err) { die( '<h2>Constructor error</h2><pre>' . $err . '</pre>'); }
@@ -55,8 +65,8 @@ $sc_client->setCredentials('pem', 'Pemspassword');
 $keys = new soapval('keys','IncidentKeysType',"","http://servicecenter.peregrine.com/PWS",false,array("query" => $query));
 $instance = new soapval("instance","IncidentInstanceType","","http://servicecenter.peregrine.com/PWS");
 $model = new soapval("model", "IncidentModelType",array($keys,$instance),null,"http://servicecenter.peregrine.com/PWS");	
-	$RetrieveIncidentListRequest = new soapval("RetrieveIncidentListRequest","RetrieveIncidentListRequestType",$model,"http://servicecenter.peregrine.com/PWS");
-	$result = $sc_client->call('RetrieveIncidentList',$RetrieveIncidentListRequest->serialize('literal'),"http://servicecenter.peregrine.com/PWS");
+$RetrieveIncidentListRequest = new soapval("RetrieveIncidentListRequest","RetrieveIncidentListRequestType",$model,"http://servicecenter.peregrine.com/PWS");
+$result = $sc_client->call('RetrieveIncidentList',$RetrieveIncidentListRequest->serialize('literal'),"http://servicecenter.peregrine.com/PWS");
 // Check for a fault
 
 if ($sc_client->fault) 
@@ -120,7 +130,8 @@ if (isset($_REQUEST['action']))
 <?php
 (isset($status)) && die($status);
 
-echo("<a href=\"".$_SERVER['PHP_SELF']."?action=doBoth\">Close and Open at the same time</a><br />\n\n");
+echo("<a href=\"".$_SERVER['PHP_SELF']."?action=doBoth\">Close and Open at the same time</a>&nbsp;-&nbsp;\n");
+echo("<a href=\"/\">Home</a><br />\n\n");
 echo "<table border=\"1\"><tr valign=\"top\"><td><pre>AEM\n\n";
 print_r($aemTickets);
 echo "</pre></td><td><pre>SC\n\n";
