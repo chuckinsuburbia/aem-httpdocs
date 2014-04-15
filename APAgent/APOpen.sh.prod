@@ -29,9 +29,10 @@ function log {
 ################################################################################
 # Begin processing
 ################################################################################
+log "Received Alert: "$@
 
-[ ${3} != "Critical" ] && exit 0
-[ ${7} == "controlm" ] && exit 0
+[ ${3} != "Critical" ] && log "Not Critical" && exit 0
+[ ${7} == "controlm" ] && log "controlm domain suppressed" && exit 0
 
 CMD="${PROGRAM} \"AEMTest\" \"${3}\" \"${1}\" \"${4}\" \"${5}\" \"${6}\" \"${7}\" \"${8}\" \"${9}\" \"${10}\""
 
@@ -43,5 +44,5 @@ if $(echo ${RETTEXT} | grep -q "<subclass>OK</subclass>") ; then
  log "AP submitted OK at "${DT}
  echo ${DT}
 else
- log "There was an error with AP agent."
+ log "There was an error with AP agent..."${RETTEXT}
 fi
