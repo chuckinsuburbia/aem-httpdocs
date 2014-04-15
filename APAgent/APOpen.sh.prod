@@ -17,7 +17,7 @@
 ################################################################################
 INSTALLDIR=/var/www/html
 LOG=${INSTALLDIR}/logs/ap_aem.log
-PROGRAM="${INSTALLDIR}/APAgent/APClient.bin"
+PROGRAM="${INSTALLDIR}/APAgent/APClient.bin --map-data AEM"
 
 ################################################################################
 # Function definitions
