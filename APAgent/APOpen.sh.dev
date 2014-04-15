@@ -17,7 +17,7 @@
 ################################################################################
 INSTALLDIR=/var/www/html
 LOG=${INSTALLDIR}/logs/ap_aem.log
-PROGRAM="${INSTALLDIR}/APAgent/APClient.bin"
+PROGRAM="${INSTALLDIR}/APAgent/APClient.bin --map-data AEM"
 
 ################################################################################
 # Function definitions
@@ -31,15 +31,12 @@ function log {
 ################################################################################
 
 [ ${3} != "Critical" ] && exit 0
+[ ${7} == "controlm" ] && exit 0
 
-if [ ${7} == "controlm" ] ; then
-	PROGRAM+=" --map-data ctrlm"
-else
-	PROGRAM+=" --map-data AEM"
-fi
+CMD="${PROGRAM} \"AEMTest\" \"${3}\" \"${1}\" \"${4}\" \"${5}\" \"${6}\" \"${7}\" \"${8}\" \"${9}\" \"${10}\""
 
-log ${PROGRAM} "AEMTest" "${3}" "${1}" "${4}" "${5}" "${6}" "${7}" "${8}" "${9}" "${10}"
-RETTEXT=$(${PROGRAM} "AEMTest" "${3}" "${1}" "${4}" "${5}" "${6}" "${7}" "${8}" "${9}" "${10}")
+log ${CMD}
+RETTEXT=$(${CMD})
 
 if $(echo ${RETTEXT} | grep -q "<subclass>OK</subclass>") ; then
  DT=$(date)
