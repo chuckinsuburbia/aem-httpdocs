@@ -17,6 +17,7 @@ function closeSC($diff,$aem) {
 	$status = "";
 	foreach($diff as $im => $incident) {
 		$status.="Triggering SC to close ticket ".$im."...";
+		unset($output);
 		exec("/var/www/html/servicecenter/anpCloseEntry.php ".$incident." ".$im,$output,$rc);
 		$status.=print_r($output,TRUE)."<br />";
 	}

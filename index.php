@@ -60,7 +60,7 @@ if(!empty($queryString)) $queryString = "?".$queryString;
 <link rel="stylesheet" href="/css/tablesorter/blue/style.css" type="text/css" media="print, projection, screen" />
 <script type="text/javascript" language="JavaScript1.2" src="./menu/stmenu.js"></script>
 <script type="text/javascript" language="JavaScript1.2" src="./menu/pem.js"></script>
-<script type="text/javascript" language="JavaScript1.2" src="./lib/jquery-2.1.0.min.js"></script>
+<script type="text/javascript" src="./lib/jquery-1.11.0.min.js"></script>
 
 <script language="javascript">
 	function checkReloading() {
@@ -73,7 +73,7 @@ if(!empty($queryString)) $queryString = "?".$queryString;
 			if (typeof timer != 'undefined') { clearTimeout(timer); }
 		}
 	}
-	$(function() { checkReloading(); });
+	$(document).ready(function(){ checkReloading(); });
 
 	//alert("<?php echo $adminUser ? "true" : "false"; ?>");
 	actionUrl="<?php echo $_SERVER['PHP_SELF'] ?>";
@@ -325,7 +325,7 @@ $(document).ready(function()
 	<a href="javascript:location.reload();"><img src="images/refresh.png" width="16" height="16" border="0"/></a>
 	<form id='mainForm' action='<?php echo($_SERVER['PHP_SELF']); ?>' method='post'>
 		<label>
-			<input type='checkbox' onclick='checkReloading();' id='reloadCB' name='reloadCB'" <?php if(isset($_REQUEST['reloadCB'])) { $_SESSION['reloadCB'] = $_REQUEST['reloadCB']; } if($_SESSION['reloadCB'] == 'on') { echo(" checked"); } ?> />
+			<input type='checkbox' onclick='checkReloading();' id='reloadCB' name='reloadCB'" <?php if(isset($_REQUEST['reloadCB'])) { $_SESSION['reloadCB'] = $_REQUEST['reloadCB']; } if(isset($_SESSION['reloadCB']) && $_SESSION['reloadCB'] == 'on') { echo(" checked"); } ?> />
 			Auto Refresh
 		</label>
 	</form>
@@ -423,7 +423,7 @@ foreach($aad as $fields) {
 			}
 			print "<tr id=\"".$fields['aa_id']."\" class=\"sev".trim($fields['aem_severity'])."\" ".$popMenu."><td width=\"12\"><a href=\"javascript:popComments(".$fields['aa_id'].");\"><img src=\"images/$image\" border=\"0\" width=\"15\" height=\"15\" title=\"$title\"></a></td><td title=\"IM:&nbsp;&nbsp;".trim($fields['sc_incident_id'])."&nbsp;&nbsp;Time:&nbsp;&nbsp;".date("m/d H:i", strtotime(trim($fields['aa_received_time'])))."&nbsp;&nbsp;Contact:&nbsp;&nbsp;".trim($fields['service'])."&nbsp;&nbsp;Contact:&nbsp;&nbsp;".$fulltext."\">".$text."</td></tr>\n";
 		} else {
-			print "<tr id=\"".$fields['aa_id']."\" class=\"sev".trim($fields['aem_severity'])."\" ".$popMenu."><td><a href=\"javascript:popComments(".$fields['aa_id'].");\"><img src=\"images/$image\" border=\"0\" width=\"20\" height=\"20\" title=\"$title\"></a></td><td align=\"center\">".trim($fields['aa_count'])."</td><td><a href=\"javascript:popIM('".trim($fields['sc_incident_id'])."');\">".trim($fields['sc_incident_id'])."</a>&nbsp;&nbsp;</td><td>".date("m/d H:i", strtotime(trim($fields['aa_received_time'])))."&nbsp;&nbsp;</td><td>".trim($fields['service'])."&nbsp;&nbsp;</td><td align=\"left\">".preg_replace('"\b(http://\S+)"', '<a href="$1" target=\"_blank\">$1</a>', trim($fields['text']))."</td></tr>";
+			print "<tr id=\"".$fields['aa_id']."\" class=\"sev".trim($fields['aem_severity'])."\" ".$popMenu."><td><a href=\"javascript:popComments(".$fields['aa_id'].");\"><img src=\"images/$image\" border=\"0\" width=\"20\" height=\"20\" title=\"$title\"></a></td><td align=\"center\">".trim($fields['aa_count'])."</td><td><a href=\"javascript:popIM('".trim($fields['sc_incident_id'])."');\">".trim($fields['sc_incident_id'])."</a>&nbsp;&nbsp;</td><td>".date("m/d&\\nb\sp;H:i", strtotime(trim($fields['aa_received_time'])))."&nbsp;&nbsp;</td><td>".trim($fields['service'])."&nbsp;&nbsp;</td><td align=\"left\">".preg_replace('"\b(http://\S+)"', '<a href="$1" target=\"_blank\">$1</a>', trim($fields['text']))."</td></tr>";
 		}//end if mini
 	}//end if checkFilter
 }
