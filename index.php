@@ -322,12 +322,22 @@ $(document).ready(function()
 
 <div style="font-size:10px;text-align:left">
 	(updated <?php echo date("m/d/Y H:i:s") ?>)
-	<a href="javascript:location.reload();"><img src="images/refresh.png" width="16" height="16" border="0"/></a>
+	<a href="javascript:mainForm.submit();"><img src="images/refresh.png" width="16" height="16" border="0"/></a>
 	<form id='mainForm' action='<?php echo($_SERVER['PHP_SELF']); ?>' method='post'>
 		<label>
-			<input type='checkbox' onclick='checkReloading();' id='reloadCB' name='reloadCB'" <?php if(isset($_REQUEST['reloadCB'])) { $_SESSION['reloadCB'] = $_REQUEST['reloadCB']; } if(isset($_SESSION['reloadCB']) && $_SESSION['reloadCB'] == 'on') { echo(" checked"); } ?> />
+			<input type='checkbox' onclick='checkReloading();' id='reloadCB' name='reloadCB' <?php if(isset($_REQUEST['reloadCB']) && $_REQUEST['reloadCB'] == 'on') { echo(" checked"); } ?> />
 			Auto Refresh
 		</label>
+		&nbsp;-&nbsp;
+		<label>
+			<input type='checkbox' onclick='this.form.submit();' id='filterSS' name='filterSS' <?php if(isset($_REQUEST['filterSS']) && $_REQUEST['filterSS'] == 'on') { echo(" checked"); } ?> />
+			Filter Store Support
+		</label>
+		&nbsp;-&nbsp;
+		<label>
+                        <input type='checkbox' onclick='this.form.submit();' id='filterAP' name='filterAP' <?php if(isset($_REQUEST['filterAP']) && $_REQUEST['filterAP'] == 'on') { echo(" checked"); } ?> />
+                        Filter Asset Protection
+                </label>
 	</form>
 </div>
 <table id="myTable" class="tablesorter">
@@ -376,6 +386,8 @@ if(!isset($_REQUEST['filter'])){
 $filter="";
 }
 foreach($aad as $fields) {
+	if(isset($_REQUEST['filterSS']) && $_REQUEST['filterSS'] == 'on' && $fields['service'] == 'STORE SUPPORT - PEM') continue;
+	if(isset($_REQUEST['filterAP']) && $_REQUEST['filterAP'] == 'on' && $fields['service'] == 'ASSET PROTECTION SUPPORT') continue;
 	//$fields[4] = substr($fields[4],0,strrpos($fields[4],":")).substr($fields[4],strlen($fields[4])-2);
 	//$fields = split('\|', $alert);
 	if(checkFilter($filter,$fields)) {
