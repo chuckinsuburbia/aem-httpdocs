@@ -225,6 +225,7 @@ function checkMatch($alertId){
 	$result = mysql_query($sql,$aem) or handleError("checkMatch - findMatches", mysql_error()." - ".$sql);
 	if(mysql_num_rows($result) >0){
 		$return = mysql_result($result,0,0);
+		if($debug) aemlog(mysql_result($result,0,0));
 	}else{
 		$return=false;
 	}
