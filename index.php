@@ -349,6 +349,7 @@ $(document).ready(function()
       <a href="javascript:popLogin();"><img src="images/lock.gif" alt="login" width="20" height="20" border="0" /></a>
       <?php } ?></th>
     <th>#</th>
+    <th>Alert</th>
     <th>IM</th>
     <th>Time</th>
     <th>Contact</th>
@@ -435,7 +436,7 @@ foreach($aad as $fields) {
 			}
 			print "<tr id=\"".$fields['aa_id']."\" class=\"sev".trim($fields['aem_severity'])."\" ".$popMenu."><td width=\"12\"><a href=\"javascript:popComments(".$fields['aa_id'].");\"><img src=\"images/$image\" border=\"0\" width=\"15\" height=\"15\" title=\"$title\"></a></td><td title=\"IM:&nbsp;&nbsp;".trim($fields['sc_incident_id'])."&nbsp;&nbsp;Time:&nbsp;&nbsp;".date("m/d H:i", strtotime(trim($fields['aa_received_time'])))."&nbsp;&nbsp;Contact:&nbsp;&nbsp;".trim($fields['service'])."&nbsp;&nbsp;Contact:&nbsp;&nbsp;".$fulltext."\">".$text."</td></tr>\n";
 		} else {
-			print "<tr id=\"".$fields['aa_id']."\" class=\"sev".trim($fields['aem_severity'])."\" ".$popMenu."><td><a href=\"javascript:popComments(".$fields['aa_id'].");\"><img src=\"images/$image\" border=\"0\" width=\"20\" height=\"20\" title=\"$title\"></a></td><td align=\"center\">".trim($fields['aa_count'])."</td><td><a href=\"javascript:popIM('".trim($fields['sc_incident_id'])."');\">".trim($fields['sc_incident_id'])."</a>&nbsp;&nbsp;</td><td>".date("m/d&\\nb\sp;H:i", strtotime(trim($fields['aa_received_time'])))."&nbsp;&nbsp;</td><td>".trim($fields['service'])."&nbsp;&nbsp;</td><td align=\"left\">".preg_replace('"\b(http[s]*://\S+)"', '<a href="$1" target=\"_blank\">$1</a>', trim($fields['text']))."</td></tr>";
+			print "<tr id=\"".$fields['aa_id']."\" class=\"sev".trim($fields['aem_severity'])."\" ".$popMenu."><td><a href=\"javascript:popComments(".$fields['aa_id'].");\"><img src=\"images/$image\" border=\"0\" width=\"20\" height=\"20\" title=\"$title\"></a></td><td align=\"center\">".trim($fields['aa_count'])."</td><td>".trim($fields['aa_id'])."</td><td><a href=\"javascript:popIM('".trim($fields['sc_incident_id'])."');\">".trim($fields['sc_incident_id'])."</a>&nbsp;&nbsp;</td><td>".date("m/d&\\nb\sp;H:i", strtotime(trim($fields['aa_received_time'])))."&nbsp;&nbsp;</td><td>".trim($fields['service'])."&nbsp;&nbsp;</td><td align=\"left\">".preg_replace('"\b(http[s]*://\S+)"', '<a href="$1" target=\"_blank\">$1</a>', trim($fields['text']))."</td></tr>";
 		}//end if mini
 	}//end if checkFilter
 }
