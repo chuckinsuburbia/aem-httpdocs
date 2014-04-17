@@ -17,14 +17,6 @@ foreach($_REQUEST as $key=>$val){
 	$tokens[$key] = $val;
 }
 
-//Special exception for QA controlm jobs
-if($tokens['domain'] == 'controlm') {
-	if(preg_match("/^qa_/",$tokens['object']) || preg_match("/^node_id/",$tokens['object'])) { 
-		aemlog("Alerts suppressed for QA controlm jobs and nodes");
-		die; 
-	}
-}
-
 $alertId=createAlert($tokens);
 if($debug) aemlog("Alert $alertId created");
 echo($alertId."\n");
