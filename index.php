@@ -386,8 +386,8 @@ if(!isset($_REQUEST['filter'])){
 $filter="";
 }
 foreach($aad as $fields) {
-	if(isset($_REQUEST['filterSS']) && $_REQUEST['filterSS'] == 'on' && $fields['service'] == 'STORE SUPPORT - PEM') continue;
-	if(isset($_REQUEST['filterAP']) && $_REQUEST['filterAP'] == 'on' && $fields['service'] == 'ASSET PROTECTION SUPPORT') continue;
+	if(isset($_REQUEST['filterSS']) && $_REQUEST['filterSS'] == 'on' && preg_match("/STORE SUPPORT - PEM/",$fields['service'])) continue;
+	if(isset($_REQUEST['filterAP']) && $_REQUEST['filterAP'] == 'on' && preg_match("/ASSET PROTECTION SUPPORT/",$fields['service'])) continue;
 	//$fields[4] = substr($fields[4],0,strrpos($fields[4],":")).substr($fields[4],strlen($fields[4])-2);
 	//$fields = split('\|', $alert);
 	if(checkFilter($filter,$fields)) {
