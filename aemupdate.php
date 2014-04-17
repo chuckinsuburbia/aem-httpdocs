@@ -1,5 +1,5 @@
 <?php
-$basePath=$_SERVER['DOCUMENT_ROOT'];
+$basePath=isset($_SERVER['DOCUMENT_ROOT']) ? $_SERVER['DOCUMENT_ROOT'] : "/var/www/html";
 require_once($basePath."/conf/config.php");
 require_once($basePath."/lib/functions.php");
 

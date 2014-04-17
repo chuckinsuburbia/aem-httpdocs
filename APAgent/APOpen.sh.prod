@@ -34,10 +34,8 @@ log "Received Alert: "$@
 [ ${3} != "Critical" ] && log "Not Critical" && exit 0
 [ ${7} == "controlm" ] && log "controlm domain suppressed" && exit 0
 
-CMD="${PROGRAM} \"${2}\" \"${3}\" \"${1}\" \"${4}\" \"${5}\" \"${6}\" \"${7}\" \"${8}\" \"${9}\" \"${10}\""
-
-log ${CMD}
-RETTEXT=$(${CMD})
+log ${PROGRAM} "${2}" "${3}" "${1}" "${4}" "${5}" "${6}" "${7}" "${8}" "${9}" "${10}"
+RETTEXT=$(${PROGRAM} "${2}" "${3}" "${1}" "${4}" "${5}" "${6}" "${7}" "${8}" "${9}" "${10}")
 
 if $(echo ${RETTEXT} | grep -q "<subclass>OK</subclass>") ; then
  DT=$(date)
