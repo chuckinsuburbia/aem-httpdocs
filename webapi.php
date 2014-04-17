@@ -2,7 +2,7 @@
 $basePath=$_SERVER['DOCUMENT_ROOT'];
 require_once($basePath."/conf/config.php");
 require_once($basePath."/lib/functions.php");
-require_once($basepath.'/lib/CronParser.php');
+require_once($basePath.'/lib/CronParser.php');
 
 //print_r($_REQUEST);
 
