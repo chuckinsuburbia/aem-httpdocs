@@ -68,7 +68,7 @@ if(!empty($queryString)) $queryString = "?".$queryString;
 		if (reload.checked) {
 			timer = setTimeout(function() {
 				document.getElementById('mainForm').submit();
-			}, 60000);
+			}, 15000);
 		} else {
 			if (typeof timer != 'undefined') { clearTimeout(timer); }
 		}
