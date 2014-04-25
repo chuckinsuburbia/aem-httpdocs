@@ -331,12 +331,17 @@ $(document).ready(function()
 		&nbsp;-&nbsp;
 		<label>
 			<input type='checkbox' onclick='this.form.submit();' id='filterSS' name='filterSS' <?php if(isset($_REQUEST['filterSS']) && $_REQUEST['filterSS'] == 'on') { echo(" checked"); } ?> />
-			Filter Store Support
+			Hide Store Support
 		</label>
 		&nbsp;-&nbsp;
 		<label>
                         <input type='checkbox' onclick='this.form.submit();' id='filterAP' name='filterAP' <?php if(isset($_REQUEST['filterAP']) && $_REQUEST['filterAP'] == 'on') { echo(" checked"); } ?> />
-                        Filter Asset Protection
+                        Hide Asset Protection
+                </label>
+		&nbsp;-&nbsp;
+		<label>
+                        <input type='checkbox' onclick='this.form.submit();' id='filterLogo' name='filterLogo' <?php if(isset($_REQUEST['filterLogo']) && $_REQUEST['filterLogo'] == 'on') { echo(" checked"); } ?> />
+                        Hide Logo
                 </label>
 	</form>
 </div>

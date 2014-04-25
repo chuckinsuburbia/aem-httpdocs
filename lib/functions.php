@@ -491,10 +491,11 @@ function topOpg(){
 <div id="msg" style="color: red; text-align:center; font-size:16px;"></div><table width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr>
     <td>
-    <table width="100%" border="0" cellspacing="0" cellpadding="0"><tr>
-    <td height="100" style="text-align:center" align="center" nowrap="nowrap" width="100%"><a href="/" style="text-decoration:none"><img src="images/aem_banner.png" height="100px" border="0" /></a></td>
-    </tr>
-  <tr>
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">';
+	if(!isset($_REQUEST['filterLogo']) || $_REQUEST['filterLogo'] == 'off') {
+		echo('<tr><td height="100" style="text-align:center" align="center" nowrap="nowrap" width="100%"><a href="/" style="text-decoration:none"><img src="images/aem_banner.png" height="100px" border="0" /></a></td></tr>');
+	}
+	print '<tr>
     <td align="center">';
 	print '<div id="admin" align="center" style="';
 	print $adminUser ? "visibility: visible; display: block" : "visibility:hidden;display:none";
