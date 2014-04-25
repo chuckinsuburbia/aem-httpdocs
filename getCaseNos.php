@@ -14,7 +14,7 @@ foreach($alerts as $alert){
 	if(!strstr($alert['text'],$_GET['text'])) continue;
 	$text = split(" ",$alert['text']);
 	$key = $text[0]." ".$text[1];
-	$return[$key] = $alert['CaseNo'];
+	$return[$key] = $alert['sc_incident_id'];
 }
 print serialize($return);
 //print "<pre>";print_r($return);print "</pre>";
