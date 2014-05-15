@@ -32,7 +32,8 @@ a:hover {
 table {
   border-collapse: collapse;
   margin:          0px;
-  align:           left;
+  margin-left:auto; 
+  margin-right:auto;
 }
 table,th,td {
   font-family: Verdana, Arial, Helvetica, sans-serif;

@@ -474,7 +474,8 @@ function htmlHead(){
 function topOpg(){
 	global $adminUser;
 
-	print '<div id="login" style="visibility:hidden; width: 200px; height:150px; background-color: #FFFFFF; border: medium double #666666; display: none;" align="center">
+	print '<link href="css/default.css" rel="stylesheet" type="text/css">
+<div id="login" style="visibility:hidden; width: 200px; height:150px; background-color: #FFFFFF; border: medium double #666666; display: none;" align="center">
   <form method="post" name="form1" id="form1" action="'.$_SERVER['PHP_SELF'].'">
     <p align="center">Username
       <input type="text" name="username" id="username" />
