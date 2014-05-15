@@ -44,7 +44,7 @@ switch(mysql_num_rows($result))
     }
    //Find matching translation steps
    $alertTokenString = implode("|",$stepTokens['value']);
-   $sql = "select atran_match,atran_value from aem_translation where atran_step = ".$step." and '".$alertTokenString."' rlike atran_match order by atran_sequence";
+   $sql = "select atran_sequence,atran_match,atran_value from aem_translation where atran_step = ".$step." and '".$alertTokenString."' rlike atran_match order by atran_sequence";
    $result = mysql_query($sql,$aem) or die(mysql_error());
    while ($row = mysql_fetch_assoc($result))
     {
@@ -57,11 +57,11 @@ switch(mysql_num_rows($result))
  }
 
 //Construct HTML elements
-$htmlColumnNames = "<tr><th></th>";
+$htmlColumnNames = "<tr><th></th><th>Sequence</th>";
 foreach ($stepTokens['name'] as $name) { $htmlColumnNames .= "<th>".$name."</th>"; }
 $htmlColumnNames .= "</tr>";
 
-$htmlTokenValues = "<tr><th>Alert Values</th>";
+$htmlTokenValues = "<tr><th>Alert Values</th><td></td>";
 foreach ($stepTokens['value'] as $value) { $htmlTokenValues .= "<td>".$value."</td>"; }
 $htmlTokenValues .= "</tr>";
 
@@ -70,6 +70,7 @@ $htmlTokenValues .= "</tr>";
 //$htmlMatchValues .= "</tr>";
 foreach ($translationConfigs as $k => $config) {
 	$htmlMatchValues .= $k == 0 ? "<tr><th>Matching Values</th>" : "<tr><td></td>";
+	$htmlMatchValues .= "<td>".$config['atran_sequence']."</td>";
 	foreach ($config['match'] as $match) { $htmlMatchValues .= "<td>".$match."</td>"; }
 	$htmlMatchValues .= "<td>".$config['atran_value']."</tr></tr>";
 }
