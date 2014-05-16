@@ -279,10 +279,10 @@ while($row = mysql_fetch_assoc($translations)) {
 */
 	echo("<a href='".$_SERVER['PHP_SELF']."?step=".$_REQUEST['step']."&sequence=".$row[$db_col['seq']]."&continue=true&action=modify");
 	foreach($tokens as $k => $v) {
-		echo("&token[".$k."]=".str_replace(array("(",")","\\"),"",$v));
+		echo("&token[".$k."]=".preg_replace(array('/^\(/','/\)(\\\)?$/'),"",$v));
 	}
 	foreach($configs as $k => $v) {
-		echo("&config[".$k."]=".str_replace(array("(",")","\\"),"",$v));
+		echo("&config[".$k."]=".preg_replace(array('/^\(/','/\)(\\\)?$/'),"",$v));
 	}
 	echo("&translation=".$row['atran_value']."'>");
 	echo("<img src='/images/edit.gif' /></a></td>");
@@ -310,7 +310,7 @@ while($row = mysql_fetch_assoc($translations)) {
 	echo("<input type=submit value='Move' /></form></td>");
 	$count=0;
 	foreach($tokens as $token) {
-		echo("<td>".str_replace(array("(",")","\\"),"",$token)."</td>");
+		echo("<td>".preg_replace(array('/^\(/','/\)(\\\)?$/'),"",$token)."</td>");
 		$count++;
 	}
 	echo("<td>".$row['atran_value']."</td>");
