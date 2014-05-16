@@ -284,7 +284,7 @@ while($row = mysql_fetch_assoc($translations)) {
 	foreach($configs as $k => $v) {
 		echo("&config[".$k."]=".str_replace(array("(",")","\\"),"",$v));
 	}
-	echo("'>");
+	echo("&translation=".$row['atran_value']."'>");
 	echo("<img src='/images/edit.gif' /></a></td>");
 /*
 	echo("<form method='get' action=".$_SERVER['PHP_SELF'].">");
