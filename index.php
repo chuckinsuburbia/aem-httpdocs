@@ -124,6 +124,11 @@ if(!empty($queryString)) $queryString = "?".$queryString;
 				id = day.getTime();
 				eval("page" + id + " = window.open('translateLookup.php?stepname=TextTranslation&alertId=" + alertId + "', '" + id + "', 'toolbar=0,scrollbars=1,location=0,statusbar=1,menubar=0,resizable=1,width=800,height=600,left = 276,top = 132');");
 				break;
+			case 'so':
+				day = new Date();
+				id = day.getTime();
+				eval("page" + id + " = window.open('translateLookup.php?stepname=SeverityOverride&alertId=" + alertId + "', '" + id + "', 'toolbar=0,scrollbars=1,location=0,statusbar=1,menubar=0,resizable=1,width=800,height=600,left = 276,top = 132');");
+				break;
 			default:
 				alert('Unknown function');
 		}
