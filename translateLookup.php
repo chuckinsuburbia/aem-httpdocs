@@ -16,7 +16,7 @@ switch(mysql_num_rows($result))
    break;
   case 1:
    $row = mysql_fetch_assoc($result);
-   if ($row['as_action'] != "function translate") { die("ERROR: Step ".$_REQUEST['stepname']." is not a translate function.");}
+   if ($row['as_action'] != "function translate" && $row['as_action'] != "function blackout") { die("ERROR: Step ".$_REQUEST['stepname']." is not a translate function.");}
    $step = $row['as_id'];
    $returnToken['id'] = $row['as_return_token'];
    // Get step input tokens

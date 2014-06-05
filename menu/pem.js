@@ -6,7 +6,8 @@ stm_aix("p1i0","p0i0",[0,"About","","",-1,-1,0,"javascript:menuCmd(\'about\');",
 stm_aix("p1i1","p1i0",[0,"Lookup ServiceContact","","",-1,-1,0,"javascript:menuCmd(\'sc\');"],150,0);
 stm_aix("p1i2","p1i0",[0,"Lookup TextTranslation","","",-1,-1,0,"javascript:menuCmd(\'tt\');"],150,0);
 stm_aix("p1i3","p1i0",[0,"Lookup SeverityOverride","","",-1,-1,0,"javascript:menuCmd(\'so\');"],150,0);
-stm_aix("p1i4","p1i0",[0,"Close","","",-1,-1,0,"javascript:menuCmd(\'close\');"],150,0);
+stm_aix("p1i3","p1i0",[0,"Lookup Blackout","","",-1,-1,0,"javascript:menuCmd(\'bo\');"],150,0);
+stm_aix("p1i5","p1i0",[0,"Close","","",-1,-1,0,"javascript:menuCmd(\'close\');"],150,0);
 stm_ep();
 stm_ep();
 stm_em();
