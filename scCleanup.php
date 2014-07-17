@@ -54,7 +54,7 @@ function openSC($diff,$aem)
  }
 
 
-$query = '(Category="PEM"|Category="BMC")&IMTicketStatus~="Closed"&PrimaryAssignmentGroup~="PEMEMAILTEST"';
+$query = '(Category="PEM"|Category="BMC"|Category="emergency")&IMTicketStatus~="Closed"&PrimaryAssignmentGroup~="PEMEMAILTEST"';
 //$query = '(Category="PEM"|Category="BMC")&IMTicketStatus~="Closed"&PrimaryAssignmentGroup="PATROL SERVICE SUPPORT"&Priority="1"';
 //$query = '(Category="PEM"|Category="BMC")&IMTicketStatus~="Closed"&PrimaryAssignmentGroup="ENTERPRISE SCHEDULING"';
 
