@@ -54,9 +54,8 @@ function openSC($diff,$aem)
  }
 
 
-$query = '(Category="PEM"|Category="BMC"|Category="emergency")&IMTicketStatus~="Closed"&PrimaryAssignmentGroup~="PEMEMAILTEST"';
-//$query = '(Category="PEM"|Category="BMC")&IMTicketStatus~="Closed"&PrimaryAssignmentGroup="PATROL SERVICE SUPPORT"&Priority="1"';
-//$query = '(Category="PEM"|Category="BMC")&IMTicketStatus~="Closed"&PrimaryAssignmentGroup="ENTERPRISE SCHEDULING"';
+$query = '(Category="PEM"|Category="BMC")&IMTicketStatus~="Closed"&PrimaryAssignmentGroup~="PEMEMAILTEST"';
+//$query = '(Category="PEM"|Category="BMC"|Category="emergency")&IMTicketStatus~="Closed"&PrimaryAssignmentGroup~="PEMEMAILTEST"';
 
 $err = $sc_client->getError();
 if ($err) { die( '<h2>Constructor error</h2><pre>' . $err . '</pre>'); }
@@ -91,7 +90,14 @@ unset($result);
 ksort($scTickets);
 
 $aad = getActiveAlerts();
-foreach($aad as $alert) { if (isset($alert['sc_incident_id'])) { $aemTickets[$alert['sc_incident_id']] = $alert['aa_id']; } else { $aemTickets[] = $alert['aa_id']; } }
+foreach($aad as $alert) { 
+	if ($alert['source'] == "emergency_alert") continue;
+	if (isset($alert['sc_incident_id'])) { 
+		$aemTickets[$alert['sc_incident_id']] = $alert['aa_id']; 
+	} else { 
+		$aemTickets[] = $alert['aa_id']; 
+	} 
+}
 unset($aad);
 ksort($aemTickets);
 
