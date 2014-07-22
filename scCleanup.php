@@ -107,8 +107,8 @@ foreach($aad as $alert) {
 unset($aad);
 ksort($aemTickets);
 
-$diff = array_diff($scTickets,$aemTickets);
-$diff1 = array_diff($aemTickets,$scTickets);
+$diff = array_diff_key($scTickets,$aemTickets);
+$diff1 = array_diff_key($aemTickets,$scTickets);
 
 if (isset($_REQUEST['action']))
  {
