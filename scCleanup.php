@@ -54,8 +54,8 @@ function openSC($diff,$aem)
  }
 
 
-//$query = '(Category="PEM"|Category="BMC")&IMTicketStatus~="Closed"&PrimaryAssignmentGroup~="PEMEMAILTEST"';
-$query = '(Category="PEM"|Category="BMC"|Category="emergency")&IMTicketStatus~="Closed"&PrimaryAssignmentGroup~="PEMEMAILTEST"';
+$query = '(Category="PEM"|Category="BMC")&IMTicketStatus~="Closed"&PrimaryAssignmentGroup~="PEMEMAILTEST"';
+//$query = '(Category="PEM"|Category="BMC"|Category="emergency")&IMTicketStatus~="Closed"&PrimaryAssignmentGroup~="PEMEMAILTEST"';
 
 $err = $sc_client->getError();
 if ($err) { die( '<h2>Constructor error</h2><pre>' . $err . '</pre>'); }
