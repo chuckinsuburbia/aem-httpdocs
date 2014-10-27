@@ -3,7 +3,7 @@
 if(!isset($local)){
 	if(isset($_SERVER['REMOTE_ADDR']) && !isset($_SESSION)) session_start();
 	if(isset($_REQUEST['username'])){
-		$ldapconfig['host'] = 'moncorpdc1';
+		$ldapconfig['host'] = 'moncorpdc01';
 		$ldapconfig['port'] = NULL;
 		$ldapconfig['basedn'] = 'dc=corp,dc=gaptea,dc=com';
 		$ldapconfig['authrealm'] = 'aptea';
