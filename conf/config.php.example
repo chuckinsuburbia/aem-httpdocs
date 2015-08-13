@@ -1,0 +1,24 @@
+<?php
+date_default_timezone_set('America/New_York');
+$debug=true;
+
+//Database connection settings
+$hostname_aem = "localhost";
+$database_aem = "db_name";
+$username_aem = "db_user";
+$password_aem = "db_pass";
+$aem = mysql_pconnect($hostname_aem, $username_aem, $password_aem) or trigger_error(mysql_error(),E_USER_ERROR);
+mysql_select_db($database_aem);
+
+# mainlog = logfile for main aem processing
+$mainlog = $basePath."/logs/aem.log";
+$aemopen = "bin/aemopen.php";
+$aemclose = "bin/aemclose.php";
+
+#WEB API SETTINGS
+$webapilog = "logs/webapi.log";
+
+//Service Center connection
+if(class_exists("nusoap_client")) $sc_client = new nusoap_client('http://servicecenter.example.com:12671/IncidentManagement?wsdl', 'wsdl', false, false, false, false, 0, 600);
+
+?>
